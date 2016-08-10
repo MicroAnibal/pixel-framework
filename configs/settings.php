@@ -29,8 +29,8 @@ define('_META_DESCRIPTION','');
 return array(
 	'database' => array(
 			'host' => 'localhost',
-			'username' => 'root',
-			'password' => 'xampp',
+			'username' => 'pixel',
+			'password' => '#pixelDB',
 			'name' => 'pixel',
             'prefix' => '',
 		),
