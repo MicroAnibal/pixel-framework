@@ -9,11 +9,13 @@ class Controller{
 	
 	protected $app = null;
 	protected $httpResponse = null;
+	protected $entityManager = null;
 	
 public function	__construct(AppBoot $app){
 	
 	$this->app = $app;
 	$this->httpResponse = new Response();
+	$this->entityManager = $app->getEntityManager();
 	                
 }
 

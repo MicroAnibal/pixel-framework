@@ -7,6 +7,8 @@ use Tlab\Controllers;
 use Tlab\Libraries\Session;
 use Tlab\Libraries\Database;
 use Symfony\Component\HttpFoundation\Request;
+use Doctrine\ORM\Tools\Setup;
+use Doctrine\ORM\EntityManager;
 
 
 class AppBoot {
@@ -14,6 +16,7 @@ class AppBoot {
 
     protected $_controller, $_action, $_params, $_body;
     protected $_database = NULL;
+    protected $_entityManager = null;
     protected $_twig = NULL;
 
     protected $_template = NULL;
@@ -192,7 +195,26 @@ public function render($file,$params){
 
 private function _connectDB(){
 	
-	$params = array();
+    // Create a simple "default" Doctrine ORM configuration for XML Mapping
+    $isDevMode = true;
+    $config = Setup::createAnnotationMetadataConfiguration(array(__DIR__."/Repositories"), $isDevMode);
+    // or if you prefer yaml or annotations
+    //$config = Setup::createXMLMetadataConfiguration(array(__DIR__."/config/xml"), $isDevMode);
+    //$config = Setup::createYAMLMetadataConfiguration(array(__DIR__."/config/yaml"), $isDevMode);
+    // database configuration parameters
+    // the connection configuration
+    $dbParams = array(
+        'driver'   => 'pdo_mysql',
+        'user'     => 'root',
+        'password' => 'xampp',
+        'dbname'   => 'pixel',
+    );
+    
+    // obtaining the entity manager
+    $this->_entityManager = \Doctrine\ORM\EntityManager::create($dbParams, $config);
+    
+    /*
+    $params = array();
 	$params['host'] = $this->getConfig('database.host');
 	$params['username'] = $this->getConfig('database.username');
 	$params['password'] = $this->getConfig('database.password');
@@ -200,11 +222,16 @@ private function _connectDB(){
 	$params['dbprefix'] = $this->getConfig('database.prefix');
 	
 	$this->_database = Database::getInstance($params);
-	
+	*/
 	
 	
 }
     
+
+    public function getEntityManager(){
+        return $this->_entityManager;
+    }
+
 	public function getRequest()
 	{
 		return $this->_httpRequest;

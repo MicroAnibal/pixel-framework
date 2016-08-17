@@ -29,6 +29,10 @@ public function indexAction(Request $request){
      */
      
      
+    
+     
+     //new dBug($this->entityManager->getConnection()->exec("SHOW TABLES")); exit;
+     
      $templateData = array('langISO'=>$langISO,'name'=>'Fabien');
      return $this->Render('default/index/index.twig', $templateData);
          
