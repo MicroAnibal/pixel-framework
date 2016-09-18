@@ -2,8 +2,10 @@
 /logs/*
 !/logs/README.md
 /public/cache
+/templates/_cache/*
 composer.phar
 /.settings
 .buildpath
 .project
-
+php-cs-fixer.phar
+.idea/
